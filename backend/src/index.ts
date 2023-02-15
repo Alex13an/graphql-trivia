@@ -1,9 +1,3 @@
-import jwt from 'jsonwebtoken';
-import * as dotenv from 'dotenv';
-dotenv.config();
+import { getUser } from './jwt/getUser';
 
-const token = jwt.sign({
-  userName: 'Traxar',
-}, process.env.JWT_SECRET)
-
-console.log('TOKEN', token);
+getUser('123');
