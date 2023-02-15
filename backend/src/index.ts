@@ -1,21 +1,9 @@
-import { ApolloServer } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
+import jwt from 'jsonwebtoken';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-const typeDefs = `#graphql
-# TODO add type defs
-`;
+const token = jwt.sign({
+  userName: 'Traxar',
+}, process.env.JWT_SECRET)
 
-const resolvers = {
-  // TODO add resolvers (in decomposed way)
-};
-
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
-
-const { url } = await startStandaloneServer(server, {
-  listen: { port: 4000 },
-});
-
-console.log(`🚀  Server ready at: ${url}`);
+console.log('TOKEN', token);
