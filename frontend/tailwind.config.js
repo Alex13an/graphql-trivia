@@ -10,7 +10,10 @@ module.exports = {
         "secondary-color": "var(--secondary)",
         "accent-color": "var(--accent)",
         "contrast-color": "var(--contrast)",
-      }
+      },
+      animation: {
+        "spin-slow": "spin 3s linear infinite",
+      },
     },
   },
   plugins: [],

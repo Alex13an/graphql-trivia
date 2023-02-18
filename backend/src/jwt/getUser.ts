@@ -1,4 +1,10 @@
+import jwt from 'jsonwebtoken';
+
 export const getUser = async (token: string) => {
-  console.log(token);
-  return '';
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET);
+  } catch(err) {
+    console.log(err);
+    return null;
+  }
 }

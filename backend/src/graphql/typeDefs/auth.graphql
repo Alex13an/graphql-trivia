@@ -1,0 +1,12 @@
+type Query {
+  test: String
+}
+
+type Mutation {
+  authUser(login: String, password: String): AuthUserResponse!
+}
+
+type AuthUserResponse {
+  accessToken: String
+  refreshToken: String
+}

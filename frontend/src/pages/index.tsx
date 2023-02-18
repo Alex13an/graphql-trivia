@@ -1,4 +1,5 @@
 import Auth from "@/components/Auth";
+import Preloader from "@/components/Preloader";
 import Head from "next/head";
 
 export default function Home() {
