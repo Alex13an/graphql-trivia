@@ -21,28 +21,16 @@ export type AuthUserResponse = {
 export type Mutation = {
   __typename?: 'Mutation';
   authUser: AuthUserResponse;
-  signUp: SignUpResponse;
 };
 
 
 export type MutationAuthUserArgs = {
-  login?: InputMaybe<Scalars['String']>;
-  password?: InputMaybe<Scalars['String']>;
-};
-
-
-export type MutationSignUpArgs = {
-  login?: InputMaybe<Scalars['String']>;
-  password?: InputMaybe<Scalars['String']>;
+  isSigned: Scalars['Boolean'];
+  login: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
   test?: Maybe<Scalars['String']>;
-};
-
-export type SignUpResponse = {
-  __typename?: 'SignUpResponse';
-  accessToken?: Maybe<Scalars['String']>;
-  refreshToken?: Maybe<Scalars['String']>;
 };

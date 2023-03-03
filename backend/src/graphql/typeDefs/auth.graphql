@@ -3,7 +3,7 @@ type Query {
 }
 
 type Mutation {
-  authUser(login: String, password: String): AuthUserResponse!
+  authUser(login: String!, password: String!, isSigned: Boolean!): AuthUserResponse!
 }
 
 type AuthUserResponse {
