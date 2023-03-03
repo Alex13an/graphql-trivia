@@ -1,27 +1,29 @@
-import { ChangeEvent, FormEvent, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import AuthForm from "@/components/AuthForm";
+import { useRouter } from "next/router";
 
-// TODO: MAKE ONE SINGLE MUTATION INSTEAD OF TWO SEPARATE
 const Auth = () => {
   const AUTH_USER = gql`
-    mutation SignUp($login: String!, $password: String!, $isSigned: Boolean!) {
-      signUp(login: $login, password: $password, isSigned: $isSigned) {
+    mutation AuthUser($login: String!, $password: String!, $isSigned: Boolean!) {
+      authUser(login: $login, password: $password, isSigned: $isSigned) {
         accessToken
-        refreshToken
       }
     }
   `;
 
-  const [authUser, { data, loading, error }] = useMutation(AUTH_USER, {
+  const router = useRouter();
+
+  const [authUser, { loading, error }] = useMutation(AUTH_USER, {
     onCompleted: (queryData) => {
-      console.log(queryData);
+      if (queryData) {
+        localStorage.setItem('access_token', JSON.stringify(queryData.authUser.accessToken));
+        router.push('/')
+      }
     },
     errorPolicy: "all",
   });
 
   const handleSubmit = (login: String, password: String, isSigned: Boolean) => {
-    console.log(login, password);
     authUser({ variables: { login, password, isSigned } });
   };
 

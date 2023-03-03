@@ -1,5 +1,5 @@
 type Query {
-  test: String
+  refreshUser: AuthUserResponse!
 }
 
 type Mutation {
@@ -8,5 +8,4 @@ type Mutation {
 
 type AuthUserResponse {
   accessToken: String
-  refreshToken: String
 }

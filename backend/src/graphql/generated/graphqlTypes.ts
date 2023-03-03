@@ -15,7 +15,6 @@ export type Scalars = {
 export type AuthUserResponse = {
   __typename?: 'AuthUserResponse';
   accessToken?: Maybe<Scalars['String']>;
-  refreshToken?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -32,5 +31,5 @@ export type MutationAuthUserArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  test?: Maybe<Scalars['String']>;
+  refreshUser: AuthUserResponse;
 };

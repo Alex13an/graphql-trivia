@@ -1,14 +1,47 @@
 import { AuthUserResponse, MutationAuthUserArgs } from "../generated/graphqlTypes";
-import { generateAuthTokens, refreshAuthToken } from "../../service/tokenService";
+import { generateAuthTokens, refreshAuthToken, validateRefreshToken } from "../../service/tokenService";
 import { validateUser, getUser, createUser } from "../../service/authUserService";
 import { GraphQLError } from "graphql";
 
 const auth = {
   Query: {
-    test: () => "123",
+    refreshUser: async (_: never, __: never, { req, res }): Promise<AuthUserResponse> => {
+      const { refreshToken } = req.cookies;
+      if (!refreshToken) {
+        throw new GraphQLError('No refresh token', {
+          extensions: {
+            code: "NO_REFRESH_TOKEN",
+          },
+        });
+      }
+
+      const userData = await validateRefreshToken(refreshToken);
+      if (!userData) {
+        throw new GraphQLError('Invalid refresh token', {
+          extensions: {
+            code: "INVALID_REFRESH_TOKEN",
+          },
+        });
+      }
+
+      const tokens = await generateAuthTokens({ login: userData.login, id: userData.userId });
+      await refreshAuthToken(userData.userId, tokens.refreshToken);
+
+      res.cookie('refreshToken', tokens.refreshToken, {
+        httpOnly: true,
+        sameSite: 'None',
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 24 * 30,
+        path: '/refresh',
+      })
+
+      return {
+        accessToken: tokens.accessToken,
+      }
+    },
   },
   Mutation: {
-    authUser: async (_: never, { login, password, isSigned }: MutationAuthUserArgs): Promise<AuthUserResponse> => {
+    authUser: async (_: never, { login, password, isSigned }: MutationAuthUserArgs, { res }): Promise<AuthUserResponse> => {
       let userId: number;
 
       if (isSigned) {
@@ -55,9 +88,17 @@ const auth = {
 
       const tokens = await generateAuthTokens({ login, id: userId });
       await refreshAuthToken(userId, tokens.refreshToken);
+
+      res.cookie('refreshToken', tokens.refreshToken, {
+        httpOnly: true,
+        sameSite: 'None',
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 24 * 30,
+        path: '/refresh',
+      })
+
       return {
         accessToken: tokens.accessToken,
-        refreshToken: tokens.refreshToken,
       }
     },
   },

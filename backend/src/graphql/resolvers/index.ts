@@ -4,6 +4,9 @@ const resolvers = {
   Mutation: {
     ...auth.Mutation,
   },
+  Query: {
+    ...auth.Query,
+  }
 }
 
 export default resolvers;
