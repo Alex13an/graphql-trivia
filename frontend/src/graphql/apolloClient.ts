@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, createHttpLink, ApolloLink, HttpLink, concat } from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloLink, HttpLink, from } from "@apollo/client";
 
 const httpLink = new HttpLink({ 
   uri: 'http://localhost:4000',
@@ -17,7 +17,10 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 })
 
 const apolloClient = new ApolloClient({
-  link: concat(authMiddleware, httpLink),
+  link: from([
+    authMiddleware,
+    httpLink,
+  ]),
   cache: new InMemoryCache(),
   credentials: 'include',
 })

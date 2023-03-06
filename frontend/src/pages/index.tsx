@@ -1,3 +1,4 @@
+import MainMenu from "@/components/MainMenu";
 import Preloader from "@/components/Preloader";
 import { gql, useQuery } from "@apollo/client";
 import Head from "next/head";
@@ -22,7 +23,7 @@ export default function Home() {
     },
     onCompleted: (queryData) => {
       if (queryData) {
-        localStorage.setItem('access_token', JSON.stringify(queryData.refreshUser.accessToken));
+        localStorage.setItem('access_token', queryData.refreshUser.accessToken);
         return;
       }
       router.push('/Auth');
@@ -41,7 +42,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Preloader />
+      {(loading || error) ? (<Preloader />) : (<MainMenu />)}
     </>
   );
 }

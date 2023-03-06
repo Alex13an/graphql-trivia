@@ -1,4 +1,4 @@
-import { AuthUserResponse, MutationAuthUserArgs } from "../generated/graphqlTypes";
+import { AuthUserResponse, LogoutUserResponse, MutationAuthUserArgs } from "../generated/graphqlTypes";
 import { generateAuthTokens, refreshAuthToken, validateRefreshToken } from "../../service/tokenService";
 import { validateUser, getUser, createUser } from "../../service/authUserService";
 import { GraphQLError } from "graphql";
@@ -39,6 +39,14 @@ const auth = {
         accessToken: tokens.accessToken,
       }
     },
+    logoutUser: async (_: never, __: never, { req, res }): Promise<LogoutUserResponse> => {
+      res.clearCookie('refreshToken', {
+        path: '/refresh',
+      });
+      return {
+        success: true,
+      }
+    }
   },
   Mutation: {
     authUser: async (_: never, { login, password, isSigned }: MutationAuthUserArgs, { res }): Promise<AuthUserResponse> => {

@@ -17,9 +17,22 @@ export type AuthUserResponse = {
   accessToken?: Maybe<Scalars['String']>;
 };
 
+export type GetUserDataResponse = {
+  __typename?: 'GetUserDataResponse';
+  ava?: Maybe<Scalars['String']>;
+  gender?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type LogoutUserResponse = {
+  __typename?: 'LogoutUserResponse';
+  success?: Maybe<Scalars['Boolean']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   authUser: AuthUserResponse;
+  test?: Maybe<Scalars['String']>;
 };
 
 
@@ -31,5 +44,7 @@ export type MutationAuthUserArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  getUserData: GetUserDataResponse;
+  logoutUser: LogoutUserResponse;
   refreshUser: AuthUserResponse;
 };

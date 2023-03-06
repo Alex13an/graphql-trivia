@@ -1,5 +1,6 @@
 type Query {
   refreshUser: AuthUserResponse!
+  logoutUser: LogoutUserResponse!
 }
 
 type Mutation {
@@ -8,4 +9,8 @@ type Mutation {
 
 type AuthUserResponse {
   accessToken: String
+}
+
+type LogoutUserResponse {
+  success: Boolean
 }

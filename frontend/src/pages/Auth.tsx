@@ -16,7 +16,7 @@ const Auth = () => {
   const [authUser, { loading, error }] = useMutation(AUTH_USER, {
     onCompleted: (queryData) => {
       if (queryData) {
-        localStorage.setItem('access_token', JSON.stringify(queryData.authUser.accessToken));
+        localStorage.setItem('access_token', queryData.authUser.accessToken);
         router.push('/')
       }
     },

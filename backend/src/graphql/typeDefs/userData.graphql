@@ -1,0 +1,13 @@
+type Query {
+  getUserData: GetUserDataResponse!
+}
+
+type Mutation {
+  test: String
+}
+
+type GetUserDataResponse {
+  name: String
+  gender: Int
+  ava: String
+}
