@@ -9,7 +9,7 @@ const userData = {
       const data = await getUserProfile(user.id);
 
       return data;
-    }
+    },
   },
   Mutation: {
     test: () => null,

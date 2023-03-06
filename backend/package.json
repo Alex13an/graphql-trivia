@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --exec node --loader ts-node/esm src/index.ts",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config codegen.ts",
+    "format": "yarn prettier --check --write src/**/**/*.ts"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"

@@ -10,7 +10,7 @@ const MainMenu = () => {
 
   const onCompleted = (res: any) => {
     setNickname(res.getUserData.name);
-  }
+  };
 
   const GET_PROFILE = gql`
     query {
@@ -29,16 +29,19 @@ const MainMenu = () => {
     }
   `;
 
-  const { loading, error, data, refetch } = useRefreshAuthQuery(GET_PROFILE, onCompleted);
-  const [ logoutUser, { data: successLogout }] = useLazyQuery(LOGOUT, {
-    fetchPolicy: 'no-cache',
+  const { loading, error, data, refetch } = useRefreshAuthQuery(
+    GET_PROFILE,
+    onCompleted
+  );
+  const [logoutUser, { data: successLogout }] = useLazyQuery(LOGOUT, {
+    fetchPolicy: "no-cache",
   });
 
   const logout = async () => {
     await logoutUser();
-    localStorage.removeItem('access_token');
+    localStorage.removeItem("access_token");
     router.reload(window.location.pathname);
-  }
+  };
 
   const handleNickChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);

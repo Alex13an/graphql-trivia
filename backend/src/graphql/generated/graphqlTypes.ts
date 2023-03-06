@@ -13,37 +13,36 @@ export type Scalars = {
 };
 
 export type AuthUserResponse = {
-  __typename?: 'AuthUserResponse';
-  accessToken?: Maybe<Scalars['String']>;
+  __typename?: "AuthUserResponse";
+  accessToken?: Maybe<Scalars["String"]>;
 };
 
 export type GetUserDataResponse = {
-  __typename?: 'GetUserDataResponse';
-  ava?: Maybe<Scalars['String']>;
-  gender?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
+  __typename?: "GetUserDataResponse";
+  ava?: Maybe<Scalars["String"]>;
+  gender?: Maybe<Scalars["Int"]>;
+  name?: Maybe<Scalars["String"]>;
 };
 
 export type LogoutUserResponse = {
-  __typename?: 'LogoutUserResponse';
-  success?: Maybe<Scalars['Boolean']>;
+  __typename?: "LogoutUserResponse";
+  success?: Maybe<Scalars["Boolean"]>;
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   authUser: AuthUserResponse;
-  test?: Maybe<Scalars['String']>;
+  test?: Maybe<Scalars["String"]>;
 };
 
-
 export type MutationAuthUserArgs = {
-  isSigned: Scalars['Boolean'];
-  login: Scalars['String'];
-  password: Scalars['String'];
+  isSigned: Scalars["Boolean"];
+  login: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type Query = {
-  __typename?: 'Query';
+  __typename?: "Query";
   getUserData: GetUserDataResponse;
   logoutUser: LogoutUserResponse;
   refreshUser: AuthUserResponse;

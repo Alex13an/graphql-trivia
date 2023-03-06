@@ -6,7 +6,6 @@ interface AuthFormProps {
   handleSubmit: (login: String, password: String, isSigned: Boolean) => void;
 }
 
-
 const AuthForm = ({ error, handleSubmit }: AuthFormProps) => {
   const [isSigned, setIsSigned] = useState<Boolean>(true);
   const [login, setLogin] = useState("");
@@ -16,7 +15,7 @@ const AuthForm = ({ error, handleSubmit }: AuthFormProps) => {
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleSubmit(login, password, isSigned);
-  }
+  };
 
   const verifyPassword = (e: ChangeEvent<HTMLInputElement>) => {
     setConfirmedPassword(e.target.value);
@@ -29,10 +28,7 @@ const AuthForm = ({ error, handleSubmit }: AuthFormProps) => {
 
   return (
     <div className="bg-primary-color text-contrast-color w-[100vw] h-[100vh] flex justify-center items-center">
-      <form
-        className="flex text-center flex-col relative"
-        onSubmit={submit}
-      >
+      <form className="flex text-center flex-col relative" onSubmit={submit}>
         <h2 className="mb-10 text-[1.5rem]">GraphQL Trivia</h2>
         <input
           name="login"
@@ -89,6 +85,6 @@ const AuthForm = ({ error, handleSubmit }: AuthFormProps) => {
       </form>
     </div>
   );
-}
+};
 
 export default AuthForm;

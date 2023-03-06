@@ -8,7 +8,7 @@ const auth = {
     refreshUser: async (_: never, __: never, { req, res }): Promise<AuthUserResponse> => {
       const { refreshToken } = req.cookies;
       if (!refreshToken) {
-        throw new GraphQLError('No refresh token', {
+        throw new GraphQLError("No refresh token", {
           extensions: {
             code: "NO_REFRESH_TOKEN",
           },
@@ -17,7 +17,7 @@ const auth = {
 
       const userData = await validateRefreshToken(refreshToken);
       if (!userData) {
-        throw new GraphQLError('Invalid refresh token', {
+        throw new GraphQLError("Invalid refresh token", {
           extensions: {
             code: "INVALID_REFRESH_TOKEN",
           },
@@ -27,29 +27,33 @@ const auth = {
       const tokens = await generateAuthTokens({ login: userData.login, id: userData.userId });
       await refreshAuthToken(userData.userId, tokens.refreshToken);
 
-      res.cookie('refreshToken', tokens.refreshToken, {
+      res.cookie("refreshToken", tokens.refreshToken, {
         httpOnly: true,
-        sameSite: 'None',
+        sameSite: "None",
         secure: true,
         maxAge: 1000 * 60 * 60 * 24 * 30,
-        path: '/refresh',
-      })
+        path: "/refresh",
+      });
 
       return {
         accessToken: tokens.accessToken,
-      }
+      };
     },
     logoutUser: async (_: never, __: never, { req, res }): Promise<LogoutUserResponse> => {
-      res.clearCookie('refreshToken', {
-        path: '/refresh',
+      res.clearCookie("refreshToken", {
+        path: "/refresh",
       });
       return {
         success: true,
-      }
-    }
+      };
+    },
   },
   Mutation: {
-    authUser: async (_: never, { login, password, isSigned }: MutationAuthUserArgs, { res }): Promise<AuthUserResponse> => {
+    authUser: async (
+      _: never,
+      { login, password, isSigned }: MutationAuthUserArgs,
+      { res }
+    ): Promise<AuthUserResponse> => {
       let userId: number;
 
       if (isSigned) {
@@ -70,15 +74,15 @@ const auth = {
             },
           });
         }
-        
+
         userId = validUser.id;
       } else {
         if (login.length < 2 || password.length < 2) {
           throw new GraphQLError("Incorrect login or password", {
             extensions: {
               code: "INCORRECT_CREDENTIALS",
-            }
-          })
+            },
+          });
         }
         const candidate = await getUser(login);
 
@@ -86,8 +90,8 @@ const auth = {
           throw new GraphQLError("User already exists", {
             extensions: {
               code: "USER_ALREADY_EXISTS",
-            }
-          })
+            },
+          });
         }
 
         const user = await createUser(login, password);
@@ -97,17 +101,17 @@ const auth = {
       const tokens = await generateAuthTokens({ login, id: userId });
       await refreshAuthToken(userId, tokens.refreshToken);
 
-      res.cookie('refreshToken', tokens.refreshToken, {
+      res.cookie("refreshToken", tokens.refreshToken, {
         httpOnly: true,
-        sameSite: 'None',
+        sameSite: "None",
         secure: true,
         maxAge: 1000 * 60 * 60 * 24 * 30,
-        path: '/refresh',
-      })
+        path: "/refresh",
+      });
 
       return {
         accessToken: tokens.accessToken,
-      }
+      };
     },
   },
 };
