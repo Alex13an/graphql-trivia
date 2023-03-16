@@ -1,0 +1,13 @@
+type Query {
+  test: Int
+}
+
+type Mutation {
+  addGender(title: String!, description: String!): Gender
+}
+
+type Gender {
+  id: Int!
+  title: String!
+  description: String!
+}

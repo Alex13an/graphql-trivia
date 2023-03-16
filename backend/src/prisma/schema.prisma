@@ -15,6 +15,14 @@ model User {
   login         String @unique
   password      String
   name          String
-  gender        Int
+  gender        Gender @relation(fields: [gender_id], references: [id])
+  gender_id     Int    @default(0)
   refresh_token String
+}
+
+model Gender {
+  id          Int    @id @default(autoincrement())
+  title       String @unique
+  description String @default("")
+  users       User[]
 }

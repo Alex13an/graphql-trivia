@@ -80,7 +80,7 @@ const AuthForm = ({ error, handleSubmit }: AuthFormProps) => {
         </button>
 
         {error && (
-          <div className="text-sm absolute left-[50%] translate-x-[-50%] bottom-[-30px] w-[100%] text-error-color">{`${error}`}</div>
+          <div className="text-sm absolute left-[50%] translate-x-[-50%] bottom-[-110%] w-[100%] text-error-color">{`${error}`}</div>
         )}
       </form>
     </div>

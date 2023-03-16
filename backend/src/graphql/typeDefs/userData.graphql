@@ -8,6 +8,6 @@ type Mutation {
 
 type GetUserDataResponse {
   name: String
-  gender: Int
+  gender_id: Int
   ava: String
 }

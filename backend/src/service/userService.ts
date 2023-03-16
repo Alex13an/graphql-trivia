@@ -3,7 +3,7 @@ import prisma from "../prisma/prismaClient";
 interface UserData {
   name: string;
   ava: string;
-  gender: number;
+  gender_id: number;
 }
 
 export const getUserProfile = async (id: number): Promise<UserData> => {
@@ -17,7 +17,7 @@ export const getUserProfile = async (id: number): Promise<UserData> => {
     ? {
         name: data.name,
         ava: "",
-        gender: data.gender,
+        gender_id: data.gender_id,
       }
     : null;
 };

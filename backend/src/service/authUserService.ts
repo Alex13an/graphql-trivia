@@ -33,7 +33,7 @@ export const createUser = async (login: string, password: string): Promise<AuthU
       login,
       password: hashPassword,
       name: login,
-      gender: 0,
+      gender_id: 1,
       refresh_token: "",
     },
   });

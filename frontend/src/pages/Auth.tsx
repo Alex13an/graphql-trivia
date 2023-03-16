@@ -25,6 +25,7 @@ const Auth = () => {
       }
     },
     errorPolicy: "all",
+    fetchPolicy: "no-cache",
   });
 
   const handleSubmit = (login: String, password: String, isSigned: Boolean) => {

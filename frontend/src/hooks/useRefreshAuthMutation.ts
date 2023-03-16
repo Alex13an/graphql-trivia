@@ -1,4 +1,4 @@
-import { useLazyQuery, gql } from "@apollo/client";
+import { useMutation, useLazyQuery, gql } from "@apollo/client";
 import { DocumentNode } from "graphql";
 
 const REFRESH_USER = gql`
@@ -9,7 +9,7 @@ const REFRESH_USER = gql`
   }
 `;
 
-const useLazyRefreshAuthQuery = (
+const useRefreshAuthMutation = (
   schema: DocumentNode,
   onCompleted?: ((data: any) => void) | undefined
 ) => {
@@ -21,10 +21,10 @@ const useLazyRefreshAuthQuery = (
     fetchPolicy: "no-cache",
   });
 
-  const [getData, { loading, error, data, refetch }] = useLazyQuery(schema, {
+  const [setData, { loading, error, data }] = useMutation(schema, {
     errorPolicy: "all",
     fetchPolicy: "no-cache",
-    onError: async ({ networkError }) => {
+    onError: async ({ networkError }, options) => {
       const code = networkError?.result?.errors[0]?.extensions?.code;
       if (code === "UNAUTHENTICATED") {
         const { data: token } = await refreshTokens();
@@ -32,18 +32,18 @@ const useLazyRefreshAuthQuery = (
           return;
         }
         localStorage.setItem("access_token", token.refreshUser.accessToken);
-        await refetch();
+        await setData(options?.variables);
       }
     },
     onCompleted,
   });
 
   return {
-    getData,
+    setData,
     loading,
     error,
     data,
   };
 };
 
-export default useLazyRefreshAuthQuery;
+export default useRefreshAuthMutation;

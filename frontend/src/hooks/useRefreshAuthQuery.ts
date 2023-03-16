@@ -32,7 +32,6 @@ const useRefreshAuthQuery = (
           return;
         }
         localStorage.setItem("access_token", token.refreshUser.accessToken);
-        console.log(token);
         await refetch();
       }
     },

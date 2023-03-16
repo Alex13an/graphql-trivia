@@ -3,6 +3,7 @@ import { gql, useLazyQuery } from "@apollo/client";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ChangeEvent, FormEvent, useState } from "react";
+import GenderSelector from "./GenderSelector";
 
 const MainMenu = () => {
   const router = useRouter();
@@ -16,7 +17,7 @@ const MainMenu = () => {
     query {
       getUserData {
         name
-        gender
+        gender_id
       }
     }
   `;
@@ -40,20 +41,20 @@ const MainMenu = () => {
   const logout = async () => {
     await logoutUser();
     localStorage.removeItem("access_token");
-    router.reload(window.location.pathname);
+    router.reload();
   };
 
   const handleNickChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
   };
 
-  const joinLobby = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const joinLobby = () => {
+    console.log('123');
   };
 
   return (
     <div className="bg-primary-color h-[100vh] w-[100vw] flex justify-center items-center">
-      <form className="text-center" onSubmit={joinLobby}>
+      <div className="text-center">
         <div className="flex justify-center items-center flex-col">
           <Image
             src={""}
@@ -61,22 +62,23 @@ const MainMenu = () => {
             className="w-[150px] h-[150px] border-contrast-color border-[1px] rounded-sm"
           />
           <input
-            className="bg-transparent text-center border-transparent focus:border-transparent focus:ring-0 !outline-none text-secondary-color mb-5 mt-3"
+            className="bg-transparent text-center border-transparent focus:border-transparent focus:ring-0 !outline-none text-secondary-color mt-3"
             value={nickname}
             onChange={handleNickChange}
             maxLength={30}
             minLength={2}
           />
+          <GenderSelector />
         </div>
-        <ul className="text-contrast-color">
+        <ul className="text-contrast-color mt-5">
           <li className="text-xl mb-1">
-            <button type="submit">Join Lobby</button>
+            <button onClick={joinLobby}>Join Lobby</button>
           </li>
           <li className="text-xl mb-1">
             <button onClick={() => logout()}>Logout</button>
           </li>
         </ul>
-      </form>
+      </div>
     </div>
   );
 };
